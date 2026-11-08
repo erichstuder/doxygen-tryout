@@ -1,0 +1,22 @@
+/*!
+
+\mainpage Architecture
+
+@startuml
+
+title Component Diagram
+
+[main]
+[button]
+[led_controller]
+[led]
+[time]
+
+main --> button : uses
+main --> led_controller : uses
+led_controller --> time : uses
+led_controller --> led : uses
+
+@enduml
+
+*/
