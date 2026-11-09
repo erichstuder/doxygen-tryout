@@ -7,4 +7,5 @@ RUN apt-get update && apt-get install -y \
     plantuml \
     default-jre \
     cmake \
+    gdb \
     python3

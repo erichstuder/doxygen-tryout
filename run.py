@@ -21,22 +21,29 @@ if __name__ == '__main__':
                     action='store_true',
                     help='build documentation')
 
+    c_doc = c.add_parser('tests', help='tests')
+    c_doc.add_argument('-t', '--test',
+                    action='store_true',
+                    help='run tests')
+
     arguments = parser.parse_args()
 
     if arguments.language == 'c':
         if arguments.domain == 'doc':
-            commands = 'doxygen'
-
-        #     if arguments.build:
-        #         commands = 'cd c && cmake -S . -B build && cmake --build build && cmake -S . --graphviz=build/project.dot && dot -Tpng -o build/project.png build/project.dot'
-        #     elif arguments.build_cpp:
-        #         commands = 'cd cpp && cmake -S . -B build && cmake --build build && cmake -S . --graphviz=build/project.dot && dot -Tpng -o build/project.png build/project.dot'
+            if arguments.build:
+                commands = ' cd c/doc/ '
+                commands += ' && doxygen'
+        elif arguments.domain == 'tests':
+            if arguments.test:
+                commands = 'cmake -S . -B build'
+                commands += ' && cmake --build build'
+                commands += ' && cd build && ctest --output-on-failure'
+    elif arguments.language == 'cpp':
+        pass # not yet implmented
     
     this_file_dir = pathlib.Path(__file__).resolve().parent
-
-    cwd = this_file_dir / arguments.language / arguments.domain
     try:
-        subprocess.run(commands, cwd=cwd, shell=True, check=True)
+        subprocess.run(commands, cwd=this_file_dir, shell=True, check=True)
     except (subprocess.CalledProcessError, KeyboardInterrupt) as e:
         exit_code = getattr(e, 'returncode', 1)
         exit(exit_code)

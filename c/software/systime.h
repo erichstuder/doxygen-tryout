@@ -1,7 +1,7 @@
 #pragma once
 
 /**
- * @file time.h
+ * @file systime.h
  */
 
 #include <stdint.h>

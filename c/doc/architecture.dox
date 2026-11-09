@@ -10,11 +10,11 @@ title Component Diagram
 [button]
 [led_controller]
 [led]
-[time]
+[systime]
 
 main --> button : uses
 main --> led_controller : uses
-led_controller --> time : uses
+led_controller --> systime : uses
 led_controller --> led : uses
 
 @enduml
